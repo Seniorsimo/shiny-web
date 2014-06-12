@@ -1,0 +1,152 @@
+/* 
+    Document   : stile
+    Created on : 27-nov-2013, 11.30.51
+    Author     : Simone, Stefania, un pochino Dav - IDE
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    /*position: absolute;*/
+    background-color: crimson;
+    background-image: url("IMG/background.png");
+    background-repeat: repeat;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    alignment-baseline: central;
+    
+}
+
+#wrap {
+    width: 1000px;
+    min-height: 600px;
+    margin: 0 auto;
+    /*0 indica il margine top e auto permette di impostare automaticamente i margini laterali(uguali tra loro)*/
+}
+
+header {
+    /*position: absolute;*/
+    height: 120px;
+    width: 99%;
+    /*min-width: 600px;*/
+    /*max-width: 840px;*/
+    /*margin-left: 15%;*/
+    
+    text-align: center;
+    border: 5px solid black;
+    border-image: url("IMG/background_element.png") 5 5 5 5 round round;
+    border-radius: 5px 5px 5px 5px;
+    background-image: url("IMG/background_element_inside.png");
+    background-repeat: repeat;
+    font-size: 100px;
+}
+
+footer {
+    /*position: absolute;*/
+    /*background-color: #ffcc66;*/
+    height: 20px;
+    width: 99%;
+    /*left: 15%;*/
+    /*bottom: 0%;*/
+    text-align: left;
+    clear: both;
+    
+    border: 5px solid black;
+    border-image: url("IMG/background_element.png") 5 5 5 5 round round;
+    border-radius: 5px 5px 5px 5px;
+    background-image: url("IMG/background_element_inside.png");
+    background-repeat: repeat;
+}
+
+#content {
+    width: 100%;
+    min-height: 440px;
+    background: white;
+}
+
+nav {
+    /*position: absolute;*/
+    width: 14%;
+    /*min-width: 90px;*/
+    /*min-height: 375px;*/
+    min-height: 440px;
+    
+    /*top: 20%;*/
+    /*background-color: #ffcc66;*/
+    float: left;
+    
+    border: 5px solid black;
+    border-image: url("IMG/background_element.png") 5 5 5 5 round round;
+    border-radius: 5px 5px 5px 5px;
+    background-image: url("IMG/background_element_inside.png");
+    background-repeat: repeat;
+}
+
+aside {
+   /* position: absolute;*/
+    width: 14.5%;
+    min-width: 90px;
+    min-height: 375px;
+    height: 75%;
+    top: 20%;
+    right: 0%;
+    /*background-color: #ffcc66;*/
+    float: right;
+    
+    border: 5px solid black;
+    border-image: url("IMG/background_element.png") 5 5 5 5 round round;
+    border-radius: 15px 15px 15px 15px;
+    background-image: url("IMG/background_element_inside.png");
+    background-repeat: repeat;
+}
+
+article {
+   /* position: absolute;*/
+    overflow-y: scroll;
+    background-color: antiquewhite;
+    width: 69%;
+    /*min-width: 420px;*/
+    height: 99%;
+    /*top: 20%;
+    left: 15%;*/
+    /*min-height: 375px;*/
+    float: left;
+}
+
+
+
+table {
+    border-width: 3px;
+    width: 90%;
+    margin: 4%;
+    border-color: black;
+    border-style: solid;
+}
+
+th {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+td {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    text-align: right;
+}
+
+.c4 {
+    width: 15%;
+}
+.c4 img {
+    vertical-align: middle;
+}
+.c4 input {
+    width: 75%;
+} 
+.c4 span {
+    
+}

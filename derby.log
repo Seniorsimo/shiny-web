@@ -1,0 +1,2 @@
+Thu Jan 23 00:20:19 CET 2014 : Ascolto impossibile sulla porta 1527 dell'host localhost:
+ java.net.BindException: Address already in use: JVM_Bind
