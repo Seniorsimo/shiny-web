@@ -20,7 +20,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Registrazione</title>
         <link href="stile.css" type="text/css" rel="stylesheet">
         <script lang="javascript">
             function controlloDati(){

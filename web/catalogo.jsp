@@ -136,7 +136,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Catalogo</title>
         <link href="stile.css" type="text/css" rel="stylesheet">
         <script src='js_code.js' language="javascript"></script>
     </head>
