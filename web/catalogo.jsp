@@ -119,13 +119,13 @@
     public String aggiungiPizza() {
         String out = "";
         if (utenteCatalogo.isAdmin()) {
-            out += "<button onclick='visualizzaForm()'>Aggiungi una pizza al Catalogo</button><br>";
+            out += "<button onclick='visualizzaForm()' style='float:left' >Aggiungi una pizza al Catalogo</button><br>";
             out += "<form  id='divFormAddPizza' method='POST' action='" + context + "/?page=catalogo' style='display: none'>";
             out += "<fieldset>Nome: <input type='text' name='nomeAddPizza' id='nomeAddPizza' required='required'/><br>";
             out += "<input type='hidden' name='actionFormAdd' id='actionFormAdd' value='new'>";
             out += "Ingredienti: <input type='text' name='ingredientiAddPizza' id='ingredientiAddPizza' required='required'/><br>";
             out += "Prezzo: <input type='text' name='prezzoAddPizza' id='prezzoAddPizza' required='required'/><br>";
-            out += "<input type='submit'><input type='button' onclick='nascondiForm()' value='Chiudi'>";
+            out += "<input type='submit' onclick='controlloPrezzo()'><input type='button' onclick='nascondiForm()' value='Chiudi'>";
 
             out += "</fieldset></form>";
         }

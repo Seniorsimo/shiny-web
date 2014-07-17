@@ -61,10 +61,10 @@ function cancellaPrenotazione(data, ora, name) {
     document.forms["vis"].submit();
 }
 
-function visualizzaForm(){
+function visualizzaForm() {
     document.getElementById("divFormAddPizza").style.display = "inline";
 }
-function nascondiForm(){
+function nascondiForm() {
     document.getElementById("actionFormAdd").value = "new";
     document.getElementById("nomeAddPizza").readOnly = false;
     document.getElementById("nomeAddPizza").value = "";
@@ -73,17 +73,31 @@ function nascondiForm(){
     document.getElementById("divFormAddPizza").style.display = "none";
 }
 
-function removePizza(index){
-    document.location.href = "?page=cancellazionePizza&index="+index;
+function removePizza(index) {
+    document.location.href = "?page=cancellazionePizza&index=" + index;
 }
-function modificaPizza(index){
-    document.getElementById("nomeAddPizza").value = document.getElementById("nomeP"+index).innerHTML;
+function modificaPizza(index) {
+    document.getElementById("nomeAddPizza").value = document.getElementById("nomeP" + index).innerHTML;
     document.getElementById("nomeAddPizza").readOnly = true;
-    document.getElementById("ingredientiAddPizza").value = document.getElementById("ingredientiP"+index).innerHTML;
-    var p = document.getElementById("prezzoP"+index).innerHTML;
+    document.getElementById("ingredientiAddPizza").value = document.getElementById("ingredientiP" + index).innerHTML;
+    var p = document.getElementById("prezzoP" + index).innerHTML;
     document.getElementById("prezzoAddPizza").value = (p.split(" ", p.indexOf(" ")))[0];
     document.getElementById("actionFormAdd").value = "edit";
     visualizzaForm();
+}
+
+function controlloPrezzo() {
+    var prezzo = document.getElementById("prezzoAddPizza");
+    if (isNaN(prezzo.value) || parseInt(prezzo.value) < 0 || parseInt(prezzo.value) > 9999) {
+        alert('Il prezzo non è in un formato corretto. Utilizzare il punto per i numeri decimali.');
+        prezzo.value = "";
+        prezzo.focus();
+    }
+}
+
+function resettaCampiLogin() {
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
 }
 
 

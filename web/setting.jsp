@@ -13,7 +13,7 @@
     private String visualizzaSetting() {
         String out = "";
         out += "<form action='?page=setting' method='post'>"
-                + "<fieldset>"
+                + "<fieldset class='cambiaPassword'>"
                 + "<label>Modifica password</label><br>"
                 + "<label>Vecchia password:<input type='password' name='oldpwd' required='required'/></label><br>"
                 + "<label>Nuova password:<input type='password' name='newpwd' required='required'/></label><br>"
@@ -33,7 +33,7 @@
                out += "</fieldset>"
                 + "</form>";
         if (u.isAdmin()) {
-            out += "Altre opzioni di modifica solo per l'admin";
+ //           out += "Altre opzioni di modifica solo per l'admin";
         }
 
         return out;

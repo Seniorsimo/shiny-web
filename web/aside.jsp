@@ -37,7 +37,7 @@
                         out += "<label class='loginwarning'>Username o Password errati!</label>";
                     }
                     out += "            <input type='submit' value='Login'/>"
-                    + "            <input type='reset' value='Cancella'/>"
+                    + "            <input type='button' onclick='resettaCampiLogin();' value='Cancella'/>"
                     + "            <a href='"+request.getContextPath()+"/?page=registrazione'>Registrati</a>"
                     + "        </form>";
             
@@ -53,7 +53,7 @@
         return out;
     }
 %>
-
+<script src='js_code.js' language="javascript"></script>
 <aside>
     <h3 style="text-align: center;">Login</h3>
 
