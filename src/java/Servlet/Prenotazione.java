@@ -20,14 +20,16 @@ public class Prenotazione {
     private String nominativo;
     private String telefono;
     private double totale;
+    private int consegnato;
 
-    public Prenotazione(String username, String data, String ora, String recapito, String nominativo, String telefono, double tot) {
+    public Prenotazione(String username, String data, String ora, String recapito, String nominativo, String telefono, double tot, int consegnato) {
         this.data = data;
         this.ora = ora;
         this.recapito = recapito;
         this.nominativo = nominativo;
         this.telefono = telefono;
         this.username = username;
+        this.consegnato = consegnato;
         pizze = new ArrayList<>();
         quantità = new ArrayList<>();
         totale = tot;
@@ -72,6 +74,10 @@ public class Prenotazione {
 
     public String getTelefono() {
         return telefono;
+    }
+    
+    public int getConsegnato() {
+        return consegnato;
     }
 
     

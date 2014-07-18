@@ -99,6 +99,9 @@ public class servlet extends HttpServlet {
                 case "prenotazione":
                     rd = goPrenotazioni(request, response);
                     break;
+                case "confermaConsegna":
+                    rd = goConfermaConsegna(request, response);
+                    break;
                 case "cancellazionePizza":
                     rd = goEliminaPizza(request, response);
                     break;
@@ -207,6 +210,21 @@ public class servlet extends HttpServlet {
             }
         }
         //Logger.getGlobal().info(((Utente)request.getSession().getAttribute("user")).getUsername());
+        return getServletContext().getRequestDispatcher("/prenotazioni.jsp");
+    }
+    
+    private RequestDispatcher goConfermaConsegna(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = (String) request.getParameter("usernamePrenotazione");
+        String data = (String) request.getParameter("dataPrenotazione");
+        String ora = (String) request.getParameter("oraPrenotazione");
+        String c = (String) request.getParameter("confermaConsegna");//confermato o no
+        int consegnato = Integer.parseInt(c);
+        try {
+            DB.confermaConsegna(username, data, ora, consegnato);
+        }catch(SQLException e) {
+            throw new ServletException(e.getMessage());    
+        }
+        
         return getServletContext().getRequestDispatcher("/prenotazioni.jsp");
     }
 
@@ -426,4 +444,6 @@ public class servlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 }

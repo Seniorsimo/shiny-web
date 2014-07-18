@@ -100,5 +100,13 @@ function resettaCampiLogin() {
     document.getElementById("password").value = "";
 }
 
+function confermaConsegna() {
+//    alert(c);
+//    document.getElementById("confermaConsegna").value = c;
+//    alert(document.getElementById("confermaConsegna").value);
+//    document.getElementsByName("confermaConsegna").value = c;
+    document.forms["formConfermaConsegna"].submit();
+}
+
 
 

@@ -1,7 +1,7 @@
 <%-- 
     Document   : catalogo
     Created on : 26-nov-2013, 15.20.21
-    Author     : Simone
+    Author     : Simone, Davide, Stefania.
 --%>
 
 <%@page import="java.util.logging.Logger"%>
@@ -58,8 +58,8 @@
         if (utenteCatalogo.isAdmin()) {
             
             out += "<form name='adminCommand' id='adminCommand' method='POST' action='?page=prenotazioni'>";
-            out += "<input type='radio' name='scelta' value='all'>Tutti gli utenti</input><br>";
-            out += "<input type='radio' name='scelta' value='single' checked='checked'>Utente: </input>";
+            out += "<input type='radio' name='scelta' value='all' checked='checked'>Tutti gli utenti</input><br>";
+            out += "<input type='radio' name='scelta' value='single'>Utente: </input>";
        //     out += "<input select='nomi' name='listanomi' value='"+utenteCatalogo.getUsername()+"'>"; 
             out += "<select name='listanomi' id='nomi' value='"+utenteCatalogo.getUsername()+"'>";
             for(String nome : utenti){
@@ -76,10 +76,11 @@
                 find = listanomi;
             }
             if(scelta==null){
-                find = utenteCatalogo.getUsername();
+ //               find = utenteCatalogo.getUsername();
+                //l'amministrazione vede tutte le pizze
+                find = "";
             }
         }
-        
         String outTemp = miePizze(find);
         if(outTemp.equals("")) out+="<p>Non hai prenotazioni. Per prenotare clicca <a href='" + context + "/?page=catalogo'>qui</a></p>";
         out += outTemp;
@@ -132,7 +133,34 @@
             //tot += subtot;
             out += "</table>";
             //out += "<td class='c4'>" + subtot + " €</td>";
-            out += "</pre><button onclick='cancellaPrenotazione(\"" + pr.getData() + "\",\"" + pr.getOra() + "\",\"" + pr.getUsername()+ "\")'>Cancella Prenotazione</button>"
+ 
+           //se prenotazione è confermata -> visualizza tasto Annulla conferma consegna
+            if(utenteCatalogo.isAdmin()) {
+                out += "<form id='formConfermaConsegna' method='POST' action='"+context+"/?page=confermaConsegna'>";
+                
+                out += "<input type='text' name='usernamePrenotazione' value='"+pr.getUsername()+"' style='display:none'/>";
+                out += "<input type='text' name='dataPrenotazione' value='"+pr.getData()+"' style='display:none'/>";
+                out += "<input type='text' name='oraPrenotazione' value='"+pr.getOra()+"' style='display:none'/>";
+                
+                
+                    if(pr.getConsegnato()==0) {
+                        //il valore di confermaConsegna viene impostato ad 1
+                        out += "<br>Non &egrave; stata confermata la consegna della prenotazione<br>";
+                        out += "<input type='text' id='confermaConsegna' name='confermaConsegna' value='1' hidden='hidden'/>";
+                        out += "</pre><button onclick='confermaConsegna()'>Conferma consegna</button>";
+                    }    //onclick='confermaConsegna()'        
+                    else {
+                        //il valore di confermaConsegna viene impostato ad 0
+                        out += "<br>La consegna della prenotazione &egrave; stata confermata<br>";
+                        out += "<input type='text' id='confermaConsegna' name='confermaConsegna' value='0' hidden='hidden'/>";
+                        out += "</pre><button onclick='confermaConsegna()'>Annulla conferma consegna</button>";
+                    }
+                
+                out += "</form>";
+            }
+            
+            
+            out += "<button onclick='cancellaPrenotazione(\"" + pr.getData() + "\",\"" + pr.getOra() + "\",\"" + pr.getUsername()+ "\")'>Cancella Prenotazione</button>"
                     + "</p><br>";
         }
         return out;

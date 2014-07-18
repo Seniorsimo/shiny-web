@@ -243,7 +243,7 @@ public class DB {
                     data = rs.getString("DATA");
                     ora = rs.getString("ORA");
                     if (!username.equals(usernameTemp) || !data.equals(dataTemp) || !ora.equals(oraTemp)) {
-                        prenotazione = new Prenotazione(rs.getString("USERNAME"), data, ora, rs.getString("RECAPITO"), rs.getString("NOMINATIVO"), rs.getString("TELEFONO"), rs.getDouble("TOTALE"));
+                        prenotazione = new Prenotazione(rs.getString("USERNAME"), data, ora, rs.getString("RECAPITO"), rs.getString("NOMINATIVO"), rs.getString("TELEFONO"), rs.getDouble("TOTALE"), rs.getInt("CONSEGNATA"));
                         prenotazioni.add(prenotazione);
                     }
                     prenotazione.addPizza(rs.getString("PIZZA"), Integer.parseInt(rs.getString("QUANTITA")));
@@ -265,7 +265,7 @@ public class DB {
                     data = rs.getString("DATA");
                     ora = rs.getString("ORA");
                     if (!data.equals(dataTemp) || !ora.equals(oraTemp)) {
-                        prenotazione = new Prenotazione(rs.getString("USERNAME"), data, ora, rs.getString("RECAPITO"), rs.getString("NOMINATIVO"), rs.getString("TELEFONO"), rs.getDouble("TOTALE"));
+                        prenotazione = new Prenotazione(rs.getString("USERNAME"), data, ora, rs.getString("RECAPITO"), rs.getString("NOMINATIVO"), rs.getString("TELEFONO"), rs.getDouble("TOTALE"), rs.getInt("CONSEGNATA"));
                         prenotazioni.add(prenotazione);
                     }
                     prenotazione.addPizza(rs.getString("PIZZA"), Integer.parseInt(rs.getString("QUANTITA")));
@@ -336,6 +336,18 @@ public class DB {
         Statement st = conn.createStatement();
         String sql;
             sql = "DELETE FROM PIZZE WHERE(NOME='" + nomePizza + "')";
+            st.executeUpdate(sql);
+        st.close();
+        conn.close(); // chiusura connessione
+    }
+    
+    static void confermaConsegna(String username, String data, String ora,int c) throws SQLException {
+        Connection conn = DriverManager.getConnection(url, user, pwd);
+        Statement st = conn.createStatement();
+        String sql;
+            sql = "UPDATE PRENOTAZIONI "
+                + "SET CONSEGNATA="+c+" "
+                + "WHERE USERNAME='"+username+"' AND DATA='"+data+"' AND ORA='"+ora+"'";
             st.executeUpdate(sql);
         st.close();
         conn.close(); // chiusura connessione
