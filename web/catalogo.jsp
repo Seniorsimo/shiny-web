@@ -115,6 +115,18 @@
 
         return out;
     }
+    
+    public String visualizzaTitolo() {
+        String out = "";
+        if (prenotazione == null || prenotazione.isEmpty()) {
+            out = "<p>Visualizzazione catalogo:</p>";
+        }
+        else{
+            out = "<p>Riepilogo ordine:</p>";
+        }
+
+        return out;
+    }
 
     public String aggiungiPizza() {
         String out = "";
@@ -146,7 +158,7 @@
         <div id="content">
         <%@include file = "nav.html"%>
         <article class="catalogo">
-            <p>Visualizzazione catalogo:</p>
+            <%=visualizzaTitolo()%>
             <form id="vis" method="post" action="<%=request.getContextPath()%>/?page=catalogo">
 
                 <%=selezionaVisualizzazione()%>
