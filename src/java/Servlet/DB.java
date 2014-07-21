@@ -87,9 +87,6 @@ public class DB {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
         String sql = "SELECT * FROM PIZZE";
-//        if(txt.compareTo("")!=0){
-//            sql = sql + " WHERE NOME LIKE '%" + txt + "%'";
-//        }
         sql = sql + " ORDER BY NOME";
         ResultSet rs = st.executeQuery(sql);
         ArrayList<Pizza> pizze = new ArrayList<>();
@@ -141,7 +138,6 @@ public class DB {
     
     public static boolean passwordCorretta(String nome, String pass) throws SQLException {
         Utente ut = null;
-        //if (controllaUtente(nome)) {
         boolean correct = false;
             Connection conn = DriverManager.getConnection(url, user, pwd);
             Statement st = conn.createStatement();
@@ -157,10 +153,15 @@ public class DB {
             rs.close();
             st.close();
             conn.close(); // chiusura connessione
-       // }
         return correct;
     }
 
+    /**
+     * Controlla che l'utente sia presente nel database.
+     * @param nome username utente da verificare
+     * @return
+     * @throws SQLException 
+     */
     public static boolean controllaUtente(String nome) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -199,6 +200,19 @@ public class DB {
         conn.close(); // chiusura connessione
     }
 
+    /**
+     * La prenotazione viene aggiunta al database.
+     * @param pizze
+     * @param quantità
+     * @param username
+     * @param data
+     * @param recapito
+     * @param telefono
+     * @param nominativo
+     * @param ora
+     * @param prezzo
+     * @throws SQLException 
+     */
     static void aggiungiPrenotazione(ArrayList<Pizza> pizze, ArrayList<Integer> quantità, String username, String data, String recapito, String telefono, String nominativo, String ora, String prezzo) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -282,6 +296,13 @@ public class DB {
         }
     }
 
+    /**
+     * Cancella la prenotazione dal database
+     * @param utente utente che ha effettuato la prentazione.
+     * @param data
+     * @param ora
+     * @throws SQLException 
+     */
     static void cancellaPrenotazione(Utente utente, String data, String ora) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -291,6 +312,11 @@ public class DB {
         conn.close();
     }
 
+    /**
+     * Carica la lista degli username.
+     * @return lista username utenti nel database.
+     * @throws SQLException 
+     */
     static ArrayList<String> caricaNomiUtenti() throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -306,6 +332,14 @@ public class DB {
         return nomiUtenti;
     }
 
+    /**
+     * Aggiunge o modifica una pizza
+     * @param nomepizza
+     * @param ingredienti
+     * @param prezzo
+     * @param nuova
+     * @throws SQLException 
+     */
     static void editPizza(String nomepizza, String ingredienti, String prezzo, boolean nuova) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -319,6 +353,13 @@ public class DB {
         st.close();
         conn.close(); // chiusura connessione
     }
+    
+    /**
+     * Modifica la password dell'utente indicato da nome
+     * @param nome username dell'utente a cui cambiare password
+     * @param pass password nuova
+     * @throws SQLException 
+     */
     static void editUser(String nome, String pass) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -331,6 +372,11 @@ public class DB {
         conn.close(); // chiusura connessione
     }
     
+    /**
+     * Elimina una pizza dal database.
+     * @param nomePizza
+     * @throws SQLException 
+     */
     static void removePizza(String nomePizza) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();
@@ -341,6 +387,14 @@ public class DB {
         conn.close(); // chiusura connessione
     }
     
+    /**
+     * Cambia lo stato della consegna.
+     * @param username username dell'utente che ha effettuato la prenotazione.
+     * @param data
+     * @param ora
+     * @param c stato da impostare.
+     * @throws SQLException 
+     */
     static void confermaConsegna(String username, String data, String ora,int c) throws SQLException {
         Connection conn = DriverManager.getConnection(url, user, pwd);
         Statement st = conn.createStatement();

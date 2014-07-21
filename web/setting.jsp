@@ -32,9 +32,6 @@
         }
                out += "</fieldset>"
                 + "</form>";
-        if (u.isAdmin()) {
- //           out += "Altre opzioni di modifica solo per l'admin";
-        }
 
         return out;
     }

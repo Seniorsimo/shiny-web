@@ -8,6 +8,11 @@
 <% error = (String) request.getAttribute("errore");%>
 <%!
     private String error;
+    
+    /**
+     * Se alla richiesta di registrazione, risulta dal controllo lato-server che lo username scelto è già stato usato, 
+     * viene visualizzato un messaggio di errore.
+     */
     public String utentePresente(){
         String out = "";
         if(error!=null){
@@ -22,11 +27,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registrazione</title>
         <link href="stile.css" type="text/css" rel="stylesheet">
+        <script src='js_code.js' language="javascript"></script>
         <script lang="javascript">
             function controlloDati(){
                 if(document.getElementById("password").value === document.getElementById("password2").value&&document.getElementById("username").value!==""){
                     document.getElementById("login").submit();
-                    //var stateObj = { foo: "bar" };
                     history.replaceState(document.referrer);
                 }
                 else{
@@ -55,15 +60,14 @@
                         Conferma password: <input type="password" name="password2" id="password2" placeholder="Ripeti password" value="<%=request.getParameter("password2")!=null?request.getParameter("password2"):""%>" required="required"/>
                     </label><br>
                     <label id="error" style="display: none">
-                        Le due password non sono unguali
+                        Le due password non sono uguali
                     </label><br>
                     <%=utentePresente()%>
                     <input type="button" onclick="controlloDati();"  value="Registrati"/>
-                    <input type="reset" value="Cancella"/>
+                    <input type='button' onclick='resettaCampiLogin();' value='Cancella'/>
                 </form>
             </fieldset>
         </article>
-        <!--<aside></aside>-->
         </div>
             <%@include file = "footer.html"%>
         </div>

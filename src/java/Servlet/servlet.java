@@ -31,7 +31,7 @@ public class servlet extends HttpServlet {
      * dovergli effettuare l'accesso ad ogni operazione
      */
     @Override
-    public void init() {//AGGIUNGERE LOG AMMINISTRATORE
+    public void init() {
         try {
             DB.init();
             pizze = DB.caricaCatalogo();
@@ -128,6 +128,13 @@ public class servlet extends HttpServlet {
         return getServletContext().getRequestDispatcher("/index.jsp");
     }
     
+    /**
+     * Permette all'utente di modificare la password.
+     * @param request
+     * @param response
+     * @return RequestDispatcher settato a setting.jsp
+     * @throws ServletException 
+     */
     private RequestDispatcher goSetting(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         if(request.getParameter("oldpwd")!=null&&request.getParameter("newpwd")!=null&&request.getParameter("newpwd2")!=null){
             try {
@@ -152,7 +159,7 @@ public class servlet extends HttpServlet {
     }
 
     /**
-     * Il metodo gestisce le richieste di registrazione
+     * Il metodo gestisce le richieste di registrazione.
      *
      * @param request
      * @param response
@@ -162,7 +169,6 @@ public class servlet extends HttpServlet {
      */
     private RequestDispatcher goRegistrazione(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("username") == null || request.getParameter("password") == null || request.getParameter("password2") == null) {
-            //request.getSession().setAttribute("back", request.getParameter("page"));
             return getServletContext().getRequestDispatcher("/registrazione.jsp");
         } else {
             try {
@@ -172,10 +178,6 @@ public class servlet extends HttpServlet {
                 } else {//registra il nuovo utente
                     DB.aggiungiUtente(request.getParameter("username"), request.getParameter("password"));
                     goLogin(request, response);
-                    //StringBuffer sb = (StringBuffer)request.getSession().getAttribute("back");
-                    //Logger.getGlobal().info((String)request.getSession().getAttribute("back"));
-                    //String[] sarray = sb.toString().split("/");
-                   // Logger.getGlobal().info("/" + sarray[sarray.length-1]);
                     return getServletContext().getRequestDispatcher("/registrato.html");
                 }
             } catch (SQLException ex) {
@@ -203,16 +205,22 @@ public class servlet extends HttpServlet {
                 target = new Utente(request.getParameter("prenotazioneCancellataName"));
             }
             try {
-                //Logger.getGlobal().info("Nome: "+ target.getUsername());
                 DB.cancellaPrenotazione(target, data, ora);
             } catch (SQLException ex) {
                 throw new ServletException(ex.getMessage());
             }
         }
-        //Logger.getGlobal().info(((Utente)request.getSession().getAttribute("user")).getUsername());
         return getServletContext().getRequestDispatcher("/prenotazioni.jsp");
     }
     
+    /**
+     * Il metodo cambia lo stato della prenotazione a confermato o annulla la conferma su richiesta dell'admin.
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException prenotazioni.jsp
+     * @throws IOException 
+     */
     private RequestDispatcher goConfermaConsegna(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = (String) request.getParameter("usernamePrenotazione");
         String data = (String) request.getParameter("dataPrenotazione");
@@ -238,7 +246,7 @@ public class servlet extends HttpServlet {
      * @throws IOException
      */
     private RequestDispatcher goLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //test
+        
         if (request.getParameter("username") == null || request.getParameter("password") == null) {
             Logger.getGlobal().warning("null");
         }
@@ -250,9 +258,8 @@ public class servlet extends HttpServlet {
             request.getSession().setAttribute("user", utente);
             if (utente.isAdmin()) {
                 request.getSession().setAttribute("utenti", utenti);
-                //Logger.getGlobal().warning("Utenti inseriti." + request.getSession().getAttribute("utenti").toString());
             }
-            //return getServletContext().getRequestDispatcher("/reindirizzamento.html"); /*CAMBIA A SECONDA DI PROVENIENZA*/
+            /*CAMBIA A SECONDA DI PROVENIENZA*/
             return getServletContext().getRequestDispatcher(request.getSession().getAttribute("back")!=null?"/?page=" + request.getSession().getAttribute("back")+"":"/index.jsp");
         }
         
@@ -260,7 +267,7 @@ public class servlet extends HttpServlet {
     }
 
     /**
-     * Il metodo gestisce i logout
+     * Il metodo gestisce i logout.
      *
      * @param request
      * @param response
@@ -290,6 +297,8 @@ public class servlet extends HttpServlet {
 
         String pre = (String) request.getParameter("visPr");
         String confermaPr = (String) request.getParameter("confPr");
+        
+        //C'è una prenotazione pendente.
         if (pre != null) { //Ho scelto le pizze
             ArrayList<Pizza> prenotazione = new ArrayList<>();
             ArrayList<Integer> quantità = new ArrayList<>();
@@ -320,7 +329,9 @@ public class servlet extends HttpServlet {
             } catch (SQLException ex) {
                 throw new ServletException(ex.getMessage());
             }
-        } else {// primo collegament alla pagina prenotazioni (lista prenotaz. vuota)
+        
+        //non ci sono prenotazioni pendenti e viene visualizzato il catalogo delle pizze.
+        } else {
 
             
             if(request.getParameter("actionFormAdd")!=null){
@@ -345,7 +356,6 @@ public class servlet extends HttpServlet {
                 init();
             }
             request.setAttribute("pizze", pizze);
-//            request.getSession().setAttribute("prenotazione", "pren");//voglio prenotare
         }
         return getServletContext().getRequestDispatcher("/catalogo.jsp");
     }
@@ -362,7 +372,15 @@ public class servlet extends HttpServlet {
     private RequestDispatcher goErrore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         return getServletContext().getRequestDispatcher("/errore.html");
     }
-
+    
+    /**
+     * Annulla la prenotazione pendente.
+     * @param request
+     * @param response
+     * @return Dispatcher del catalogo.
+     * @throws ServletException
+     * @throws IOException 
+     */
     private RequestDispatcher goElimina(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().setAttribute("prenotazione", null);
         request.getSession().setAttribute("quantità", null);
@@ -371,10 +389,15 @@ public class servlet extends HttpServlet {
         return goCatalogo(request, response);
     }
     
+    /**
+     * Elimina una pizza dal catalogo
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     private RequestDispatcher goEliminaPizza(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute("prenotazione", null);
-        request.getSession().setAttribute("quantità", null);
-        
         if(((Utente)request.getSession().getAttribute("user")).isAdmin()){
             Pizza pizza = pizze.get(Integer.parseInt(request.getParameter("index")));
             try {
@@ -384,7 +407,7 @@ public class servlet extends HttpServlet {
                 throw new ServletException(ex.getMessage());
             }
         }
-        init();
+        init();//aggiorna la lista delle pizze
         
         return goCatalogo(request, response);
     }
