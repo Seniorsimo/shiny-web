@@ -6,21 +6,23 @@
 
 <%@page import="Servlet.Utente" session="true"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%--<%String pagina = (request.getContextPath()).toString() + "/Ugo?page=" + request.getParameter("page");%>--%>
 <%
-    //this.session = session;
     this.request = request;
 %>
 <%!
-    /*sei loggato? ti fa vedere credenziali
-     non sei loggato? form per login
-     */
+   
     private Utente utente;
     private HttpServletRequest request;
+    
+    /**
+     * Mostra credenziali e tasto di logout all'utente loggato.
+     * Mostra form per login altrimenti.
+     */
+    
     public String nascondiForm() {
         String out;
         utente = (Utente) request.getSession().getAttribute("user");
-        if(request.getParameter("page")==null||!request.getParameter("page").equals("login")||!request.getParameter("page").equals("logout")){
+        if (request.getParameter("page")==null||!request.getParameter("page").equals("login")||!request.getParameter("page").equals("logout")){
                 request.getSession().setAttribute("back", request.getParameter("page")!=null?request.getParameter("page"):"");
             }
         if (utente.getUsername().equals("Guest")) {
@@ -30,7 +32,7 @@
                     + "            </label>"
                     + "            "
                     + "            <label>"
-                    + "                Password: <input type='password' id='password' name='password' value='"+(request.getParameter("password")!=null?request.getParameter("password"):"")+"'placeholder='Password' required/>"
+                    + "                Password: <input type='password' id='password' name='password' value=''placeholder='Password' required/>"
                     + "            </label>"
                     + "            ";
                     if(request.getParameter("error")!=null){
@@ -45,10 +47,7 @@
             out = "Ciao, " + utente.getUsername() + "!<br>"
                     + "<form method='post' action='"+request.getContextPath()+"/?page=logout' id='logout'>"
                     + "<input type='submit' value='Logout'/></form>";
-            //request.getSession().setAttribute("back", null);
-            //if(utente.isAdmin()){
                 out += "<p><a href='?page=setting'>Impostazioni</a></p>";
-           // }
         }
         return out;
     }

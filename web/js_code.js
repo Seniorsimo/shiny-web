@@ -3,36 +3,49 @@
  * and open the template in the editor.
  */
 
-var controllo = false;
 
+/**
+ * Torna alla pagina precedentemente visitata.
+ */
 function paginaPrecedente() {
     window.location.href = document.referrer;
 }
+
+/**
+ * Redirige alla home dopo la registrazione.
+ */
 function redirectRegistrazione() {
-//    var stateObj = { foo: "bar" };
-//    history.pushState(null, "", history.go(-2));
-//  DA RIVEDERE!!!!!!!!!!!!!
-    //window.location.href = document.referrer;
     window.location.href = ".";
 }
+
+/**
+ * Sostituisce l'immagine nella colonna "quantità" con il numero di pizze scelto.
+ * @param {type} index posizione della pizza nel catalogo.
+ */
 function sostituzione(index) {
     document.getElementById("add" + index).style.display = "none";
     document.getElementById("q" + index).style.display = "inline";
     document.getElementById("q" + index).focus();
     document.getElementById("q" + index).value = 1;
-    controllo = true;
 }
+
+/**
+ * Controlla che ut sia un utente autenticato. 
+ * Se l'utente è autenticato può effettuare la prenotazione, altrimenti il sistema richiede il login.
+ * @param {type} ut utente
+ */
 function isLogged(ut) {
     if (ut === "Guest") {
         alert("Per prenotarti devi fare il login. Se sei già registrato, puoi farlo a lato.");
     }
     else {
         document.forms["vis"].submit();
-
-        //window.location.href = "?page=catalogo";
     }
 }
-
+/**
+ * Controlla che vengano inseriti tutti i dati necessari per effettuare una prenotazione.
+ * @param {type} n lunghezza elenco pizze
+ */
 function controlloDati(n) {
     if (document.getElementById("nominativo").value === "" || document.getElementById("recapito").value === "" || document.getElementById("telefono").value === "" || document.getElementById("data").value === "" || document.getElementById("ora").value === "") {
         alert("Non hai inserito tutti i dati necessari.");
@@ -47,13 +60,12 @@ function controlloDati(n) {
     alert("Non ci sono pizze inserite. Ricontrolla i dati inseriti.");
 }
 
-//Funzione che serviva a capire se la tabella del catalogo delle pizze conteneva o meno valori e in tal caso visualizzare l'input number invece del +
-//function haveValues(n){
-//    for(i=0; i<n; i++){
-//        if(document.getElementById("q"+i).value !== null)
-//            sostituzione(i);
-//    }
-//}
+/**
+ * Viene cancellata la prenotazione identificata con data, ora e name.
+ * @param {type} data
+ * @param {type} ora
+ * @param {type} name
+ */
 function cancellaPrenotazione(data, ora, name) {
     document.getElementById("prenotazioneCancellataData").value = data;
     document.getElementById("prenotazioneCancellataOra").value = ora;
@@ -61,9 +73,16 @@ function cancellaPrenotazione(data, ora, name) {
     document.forms["vis"].submit();
 }
 
+/**
+ * Visualizza il form per aggiungere nuove pizze al catalogo.
+ */
 function visualizzaForm() {
     document.getElementById("divFormAddPizza").style.display = "inline";
 }
+
+/**
+ * Nasconde il form per l'inserimento di nuove pizze nel catalogo.
+ */
 function nascondiForm() {
     document.getElementById("actionFormAdd").value = "new";
     document.getElementById("nomeAddPizza").readOnly = false;
@@ -73,9 +92,18 @@ function nascondiForm() {
     document.getElementById("divFormAddPizza").style.display = "none";
 }
 
+/**
+ * Rimuove la pizza in posizione 'index'
+ * @param index posizione della pizza nel catalogo.
+ */
 function removePizza(index) {
     document.location.href = "?page=cancellazionePizza&index=" + index;
 }
+
+/**
+ * Permette di modificare le proprietà della pizza in posizione 'index'.
+ * @param index posizione della pizza nel catalogo.
+ */
 function modificaPizza(index) {
     document.getElementById("nomeAddPizza").value = document.getElementById("nomeP" + index).innerHTML;
     document.getElementById("nomeAddPizza").readOnly = true;
@@ -86,6 +114,9 @@ function modificaPizza(index) {
     visualizzaForm();
 }
 
+/**
+ * Viene controllato che il prezzo sia scritto nel formato corretto.
+ */
 function controlloPrezzo() {
     var prezzo = document.getElementById("prezzoAddPizza");
     if (isNaN(prezzo.value) || parseInt(prezzo.value) < 0 || parseInt(prezzo.value) > 9999) {
@@ -95,16 +126,19 @@ function controlloPrezzo() {
     }
 }
 
+/**
+ * Resetta i campi di login.
+ */
 function resettaCampiLogin() {
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
+    document.getElementById("password2").value = "";
 }
 
+/**
+ * L'amministratore segna come consegnata una prenotazione o annulla la conferma.
+ */
 function confermaConsegna() {
-//    alert(c);
-//    document.getElementById("confermaConsegna").value = c;
-//    alert(document.getElementById("confermaConsegna").value);
-//    document.getElementsByName("confermaConsegna").value = c;
     document.forms["formConfermaConsegna"].submit();
 }
 

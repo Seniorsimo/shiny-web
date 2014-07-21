@@ -30,6 +30,13 @@
     private String ora;
     private String context;
 
+    /**
+     * Vengono visualizzate le pizze prenotabili.
+     * L'Admin ha la possibilità di aggiungere o rimuovere pizze dall'elenco.
+     * 
+     * Gli utenti registrati possono prenotare le pizze e visualizzare la loro scelta.
+     * Il catalogo viene visualizzato nuovamente alla conferma o all'annullamento della prenotazione pendente.
+     */
     public String visualizzazioneCatalogo() {
         String out = "<label>Nominativo: <input type='text' name='nominativo' id='nominativo' required='required'/></label>";
         out += "<label>Telefono: <input type='text' name='telefono' id='telefono' required='required'/></label><br>";
@@ -62,7 +69,11 @@
         out += "</table>";
         return out;
     }
-
+    
+    /**
+     * Visualizza la prenotazione da confermare.
+     * Vengono visualizzati un tasto per confermare e uno per annullare la prenotazione pendente.
+     */
     public String visualizzazionePrenotazione() {
         String out = "<label>Nominativo: " + nominativo + "</label>";
         out += "<label>Telefono: " + telefono + "</label>";
@@ -95,7 +106,11 @@
         out += "<input type='text' name='confPr' value='" + tot + "' hidden='hidden'/>"; //conferma definitiva prenotazione
         return out;
     }
-
+    
+    /**
+     * Se ci sono prenotazioni da confermare, vengono visualizzate queste.
+     * Viene visualizzato il catalogo delle pizze prenotabili altrimenti.
+     */
     public String selezionaVisualizzazione() {
         if (prenotazione == null || prenotazione.isEmpty()) {
             return visualizzazioneCatalogo();
@@ -104,6 +119,9 @@
         }
     }
 
+    /**
+     * Visualizza i bottone per aggiungere la prenotazione o cancellarla.
+     */
     public String visualizzaBottoni() {
         String out = "";
         if (prenotazione == null || prenotazione.isEmpty()) {
@@ -116,9 +134,12 @@
         return out;
     }
 
+    /**
+     * Se l'utente un amministratore ha possibilità di aggiungere nuove pizze al catalogo.
+     */
     public String aggiungiPizza() {
         String out = "";
-        if (utenteCatalogo.isAdmin()) {
+        if (utenteCatalogo.isAdmin() && (prenotazione == null || prenotazione.isEmpty())) {
             out += "<button onclick='visualizzaForm()' style='float:left' >Aggiungi una pizza al Catalogo</button><br>";
             out += "<form  id='divFormAddPizza' method='POST' action='" + context + "/?page=catalogo' style='display: none'>";
             out += "<fieldset>Nome: <input type='text' name='nomeAddPizza' id='nomeAddPizza' required='required'/><br>";
