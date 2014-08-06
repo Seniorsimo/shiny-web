@@ -18,7 +18,7 @@
         <div id="content">
         <%@include file = "nav.html"%>
         <article>
-            Immagine pizza
+            <img class="homeimage" src="IMG/pizza.jpg"/>
         </article>
         <%@include file = "aside.jsp"%>
         </div>

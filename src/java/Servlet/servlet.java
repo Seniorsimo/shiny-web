@@ -178,6 +178,7 @@ public class servlet extends HttpServlet {
                 } else {//registra il nuovo utente
                     DB.aggiungiUtente(request.getParameter("username"), request.getParameter("password"));
                     goLogin(request, response);
+                    utenti = DB.caricaNomiUtenti();
                     return getServletContext().getRequestDispatcher("/registrato.html");
                 }
             } catch (SQLException ex) {

@@ -189,3 +189,7 @@ td {
 .loginwarning {
     display: block;
 }
+
+.homeimage{
+    width: 100%;
+}
